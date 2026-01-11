@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blood Donation – Eligibility Quiz</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('cover-image.jpg') center center/cover no-repeat fixed;
+      background-color: #667eea;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #c7442d;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar nav a {
+      margin: 0 1.5rem;
+      color: #c7442d;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+    }
+
+    .navbar nav a:hover {
+      background: #c7442d;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(199, 68, 45, 0.3);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      padding: 3rem;
+      border-radius: 20px;
+      max-width: 800px;
+      margin: 2rem auto;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    h1 {
+      text-align: center;
+      color: #c7442d;
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .image-container {
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .image-container::before {
+      content: '🩸';
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 1rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .quiz-panel {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2.5rem;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(199, 68, 45, 0.1);
+    }
+
+    .quiz-panel h2 {
+      color: #c7442d;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-panel > p {
+      color: #666;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .slide {
+      display: none;
+      text-align: left;
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: rgba(247, 249, 252, 0.8);
+      border-radius: 12px;
+      border-left: 4px solid #c7442d;
+    }
+
+    .active-slide {
+      display: block;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .slide p {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 1rem;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 3rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid transparent;
+    }
+
+    .radio-group label:hover {
+      background: rgba(199, 68, 45, 0.1);
+      border-color: #c7442d;
+      transform: translateY(-2px);
+    }
+
+    .radio-group input[type="radio"] {
+      margin-right: 0.8rem;
+      transform: scale(1.3);
+      accent-color: #c7442d;
+    }
+
+    .radio-group label:has(input:checked) {
+      background: #c7442d;
+      color: white;
+      border-color: #c7442d;
+      box-shadow: 0 4px 15px rgba(199, 68, 45, 0.3);
+    }
+
+    .buttons {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    button {
+      padding: 1rem 2.5rem;
+      background: linear-gradient(45deg, #c7442d, #e74c3c);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(199, 68, 45, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(199, 68, 45, 0.4);
+      background: linear-gradient(45deg, #e74c3c, #c7442d);
+    }
+
+    button:disabled {
+      background: linear-gradient(45deg, #ccc, #aaa);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .result {
+      margin-top: 2rem;
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.3rem;
+      padding: 1.5rem;
+      border-radius: 15px;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .result.eligible {
+      background: linear-gradient(45deg, #27ae60, #2ecc71);
+      color: white;
+      box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+    }
+
+    .result.not-eligible {
+      background: linear-gradient(45deg, #e74c3c, #c0392b);
+      color: white;
+      box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(199, 68, 45, 0.2);
+      border-radius: 3px;
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(45deg, #c7442d, #e74c3c);
+      transition: width 0.5s ease;
+      border-radius: 3px;
+    }
+
+    .question-counter {
+      text-align: center;
+      color: #666;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="brand">🩸 BloodAid</div>
+    <nav>
+      <a href="register.html">Register</a>
+      <a href="lifesaver.html">Search Stock</a>
+      <a href="find-donors.html">Search Donor</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h1>Welcome to Heart2Heart Blood Donation Camp</h1>
+
+    <!-- Image -->
+    <div class="image-container"></div>
+
+    <!-- Quiz Panel -->
+    <div class="quiz-panel">
+      <h2>Can I Donate Blood?</h2>
+      <p>Find out if you're eligible by taking this quick quiz.</p>
+      
+      <div class="progress-bar" id="progressBar" style="display: none;">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      
+      <div class="question-counter" id="questionCounter" style="display: none;"></div>
+      
+      <button id="startBtn">Take the Eligibility Quiz</button>
+
+      <div id="slidesContainer">
+        <div class="slide" data-question="q1">
+          <p>1. Are you between 18 and 75 years old?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="q1" value="yes"> Yes</label>
+            <label><input type="radio" name="q1" value="no"> No</label>
+          </div>
+        </div>
+        <div class="slide" data-question="q2">
+          <p>2. Have you donated blood in the last 3 months?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="q2" value="yes"> Yes</label>
+            <label><input type="radio" name="q2" value="no"> No</label>
+          </div>
+        </div>
+        <div class="slide" data-question="q3">
+          <p>3. Have you had any vaccinations in the last 2 weeks?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="q3" value="yes"> Yes</label>
+            <label><input type="radio" name="q3" value="no"> No</label>
+          </div>
+        </div>
+        <div class="slide" data-question="q4">
+          <p>4. Have you traveled to a malaria-prone area in the last 6 months?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="q4" value="yes"> Yes</label>
+            <label><input type="radio" name="q4" value="no"> No</label>
+          </div>
+        </div>
+        <div class="slide" data-question="q5">
+          <p>5. Do you voluntarily agree to donate blood and understand the procedure?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="q5" value="yes"> Yes</label>
+            <label><input type="radio" name="q5" value="no"> No</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button id="nextBtn" style="display:none">Next</button>
+      </div>
+
+      <div id="result" class="result"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const slides = document.querySelectorAll('.slide');
+    const resultBox = document.getElementById('result');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+    const questionCounter = document.getElementById('questionCounter');
+    let current = 0;
+    const answers = [];
+
+    function updateProgress() {
+      const progress = ((current + 1) / slides.length) * 100;
+      progressFill.style.width = progress + '%';
+      questionCounter.textContent = `Question ${current + 1} of ${slides.length}`;
+    }
+
+    function showSlide(idx) {
+      slides.forEach((s, i) => s.classList.toggle('active-slide', i === idx));
+      nextBtn.textContent = idx === slides.length - 1 ? 'Get Results' : 'Next Question';
+      updateProgress();
+    }
+
+    startBtn.onclick = () => {
+      startBtn.style.display = 'none';
+      nextBtn.style.display = 'inline-block';
+      progressBar.style.display = 'block';
+      questionCounter.style.display = 'block';
+      showSlide(0);
+    };
+
+    nextBtn.onclick = () => {
+      const question = slides[current].dataset.question;
+      const selected = document.querySelector(`input[name="${question}"]:checked`);
+      if (!selected) {
+        alert('Please select an answer to continue.');
+        return;
+      }
+      answers[current] = selected.value;
+      current++;
+      if (current < slides.length) {
+        showSlide(current);
+      } else {
+        finishQuiz();
+      }
+    };
+
+    function finishQuiz() {
+      const eligible = answers[0] === 'yes' &&
+                      answers[1] === 'no' &&
+                      answers[2] === 'no' &&
+                      answers[3] === 'no' &&
+                      answers[4] === 'yes';
+
+      progressBar.style.display = 'none';
+      questionCounter.style.display = 'none';
+      slides.forEach(slide => slide.style.display = 'none');
+
+      if (eligible) {
+        resultBox.innerHTML = '✅ Congratulations! You are eligible to donate blood.<br><small>Thank you for your willingness to save lives!</small>';
+        resultBox.className = 'result eligible';
+      } else {
+        resultBox.innerHTML = '❌ Sorry, you are not eligible to donate blood at this time.<br><small>Please consult with medical staff for more information.</small>';
+        resultBox.className = 'result not-eligible';
+      }
+      
+      nextBtn.style.display = 'none';
+    }
+
+    // Add smooth hover effects for radio buttons
+    document.addEventListener('DOMContentLoaded', function() {
+      const radioLabels = document.querySelectorAll('.radio-group label');
+      radioLabels.forEach(label => {
+        label.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-2px)';
+        });
+        label.addEventListener('mouseleave', function() {
+          if (!this.querySelector('input').checked) {
+            this.style.transform = 'translateY(0)';
+          }
+        });
+      });
+    });
+
+  </script>
+</body>
+</html>

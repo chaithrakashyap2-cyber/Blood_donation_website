@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Blood Donors</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #c7442d;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar nav a {
+      margin: 0 1.5rem;
+      color: #c7442d;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      text-transform: capitalize;
+    }
+
+    .navbar nav a:hover {
+      background: #c7442d;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(199, 68, 45, 0.3);
+    }
+
+    .main-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 80px);
+      padding: 20px;
+    }
+
+    .container {
+      background: #c42522;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-section {
+      flex: 1;
+      z-index: 2;
+    }
+
+    h1 {
+      color: white;
+      font-size: 32px;
+      margin-bottom: 30px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      color: white;
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      background: white;
+      color: #333;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 20px;
+      padding-right: 40px;
+    }
+
+    select:focus {
+      outline: 3px solid rgba(255, 255, 255, 0.5);
+      outline-offset: 2px;
+    }
+
+    button {
+      background: white;
+      color: #c42522;
+      padding: 12px 40px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .image-section {
+      flex: 0 0 300px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .blood-drop-container {
+      position: relative;
+      width: 250px;
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .blood-drop-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      /* filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)); */
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        padding: 30px;
+      }
+
+      .image-section {
+        flex: 0 0 200px;
+        margin-top: 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .blood-drop {
+        width: 120px;
+        height: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="brand">🩸 BloodAid</div>
+    <nav>
+      <a href="homepage2.html">Home</a>
+      <a href="register.html">Register</a>
+      <a href="lifesaver.html">Search Stock</a>
+      <a href="find-donors.html">Search Donor</a>
+      
+    </nav>   
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-wrapper">
+    <div class="container">
+    <div class="form-section">
+      <h1>Find Blood Donors</h1>
+      <form id="donorForm">
+        <div class="form-group">
+          <label for="dpBloodGroup">Blood Group</label>
+          <select id="dpBloodGroup">
+            <option value="Select">-----Select-----</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="dpCountry">Select Country</label>
+          <select id="dpCountry">
+            <option value="Select">-----Select-----</option>
+            <option value="India">India</option>
+            <option value="Nepal">Nepal</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="dpState">Select State</label>
+          <select id="dpState">
+            <option value="Select">-----Select-----</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="dpDistrict">Select District</label>
+          <select id="dpDistrict">
+            <option value="Select">-----Select-----</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="dpCity">Select City</label>
+          <select id="dpCity">
+            <option value="Select">-----Select-----</option>
+          </select>
+        </div>
+
+        <button type="submit">SEARCH</button>
+      </form>
+    </div>
+
+    <div class="image-section">
+      <div class="blood-drop-container">
+        <img src="images/blood-drop-search.png" alt="Blood Drop with Magnifying Glass">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const stateOptions = {
+      India: ["Delhi", "Maharashtra", "Karnataka", "Tamil Nadu", "Gujarat", "Rajasthan", "Uttar Pradesh", "West Bengal"],
+      Nepal: ["Bagmati", "Gandaki", "Lumbini", "Karnali", "Sudurpashchim"]
+    };
+
+    const districtOptions = {
+      Delhi: ["New Delhi", "Central Delhi", "North Delhi", "South Delhi", "East Delhi", "West Delhi"],
+      Maharashtra: ["Mumbai", "Pune", "Nagpur", "Thane", "Nashik"],
+      Karnataka: ["Bangalore Urban", "Mysore", "Mangalore", "Hubli-Dharwad", "Belgaum"],
+      "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem"],
+      Gujarat: ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Gandhinagar"],
+      Rajasthan: ["Jaipur", "Jodhpur", "Udaipur", "Kota", "Ajmer"],
+      "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra", "Varanasi", "Allahabad"],
+      "West Bengal": ["Kolkata", "Howrah", "Durgapur", "Asansol", "Siliguri"],
+      Bagmati: ["Kathmandu", "Lalitpur", "Bhaktapur", "Kavrepalanchok", "Chitwan"],
+      Gandaki: ["Pokhara", "Gorkha", "Lamjung", "Tanahun", "Syangja"],
+      Lumbini: ["Rupandehi", "Kapilvastu", "Palpa", "Nawalparasi", "Gulmi"],
+      Karnali: ["Surkhet", "Dailekh", "Jajarkot", "Kalikot", "Salyan"],
+      Sudurpashchim: ["Kailali", "Kanchanpur", "Dadeldhura", "Baitadi", "Darchula"]
+    };
+
+    const cityOptions = {
+      "New Delhi": ["Connaught Place", "Saket", "Dwarka", "Rohini", "Janakpuri"],
+      "Central Delhi": ["Karol Bagh", "Paharganj", "Rajendra Place", "Patel Nagar"],
+      Mumbai: ["Andheri", "Borivali", "Bandra", "Powai", "Dadar"],
+      Pune: ["Shivaji Nagar", "Kothrud", "Viman Nagar", "Hinjewadi", "Wakad"],
+      "Bangalore Urban": ["MG Road", "Whitefield", "Koramangala", "Indiranagar", "Jayanagar"],
+      Mysore: ["Mysore City", "Vijayanagar", "Kuvempunagar", "Hebbal", "Bannimantap"],
+      Chennai: ["T. Nagar", "Anna Nagar", "Velachery", "Adyar", "Mylapore"],
+      Kolkata: ["Park Street", "Salt Lake", "Howrah", "Ballygunge", "Gariahat"],
+      Kathmandu: ["Baneshwor", "Thamel", "Lazimpat", "Maharajgunj", "Chabahil"],
+      Pokhara: ["Lakeside", "Hemja", "Prithvi Chowk", "Mahendrapul", "Birauta"]
+    };
+
+    document.getElementById("dpCountry").addEventListener("change", function () {
+      const country = this.value;
+      const states = stateOptions[country] || [];
+      populateDropdown("dpState", states);
+      populateDropdown("dpDistrict", []);
+      populateDropdown("dpCity", []);
+    });
+
+    document.getElementById("dpState").addEventListener("change", function () {
+      const state = this.value;
+      const districts = districtOptions[state] || [];
+      populateDropdown("dpDistrict", districts);
+      populateDropdown("dpCity", []);
+    });
+
+    document.getElementById("dpDistrict").addEventListener("change", function () {
+      const district = this.value;
+      const cities = cityOptions[district] || [];
+      populateDropdown("dpCity", cities);
+    });
+
+    function populateDropdown(id, options) {
+      const dropdown = document.getElementById(id);
+      dropdown.innerHTML = '<option value="Select">-----Select-----</option>';
+      options.forEach(opt => {
+        const option = document.createElement("option");
+        option.value = opt;
+        option.textContent = opt;
+        dropdown.appendChild(option);
+      });
+    }
+
+    document.getElementById("donorForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      
+      const bloodGroup = document.getElementById("dpBloodGroup").value;
+      const country = document.getElementById("dpCountry").value;
+      const state = document.getElementById("dpState").value;
+      const district = document.getElementById("dpDistrict").value;
+      const city = document.getElementById("dpCity").value;
+      
+      if (bloodGroup === "Select" || country === "Select" || state === "Select" || 
+          district === "Select" || city === "Select") {
+        alert("Please select all fields before searching.");
+        return;
+      }
+      
+      alert(`Searching for ${bloodGroup} blood donors in ${city}, ${district}, ${state}, ${country}`);
+    });
+  </script>
+</body>
+</html>
